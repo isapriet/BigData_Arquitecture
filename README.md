@@ -13,9 +13,9 @@ El mercado inmobiliario es uno de los más sólidos y rentables. Las personas bu
 - Api de idealista.com en la que podemos buscar inmuebles utilizando el siguiente ejemplo:
 curl -X POST -H "Authorization: Bearer {{OAUTH_BEARER}}" -H "Content-Type: multipart/form-data;" -F "center=40.430,-3.702" -F "propertyType=homes" -F "distance=15000" -F "operation=sale" "https: //api.idealista.com/3.5/es/search"
 - Crawling para avisar de nuevos inmuebles publicados y scraping para extraer los datos de las siguientes web:
-  ○ Fotocasa: https://www.fotocasa.es/es/
-  ○ Milanuncios: https://www.milanuncios.com/inmobiliaria/
-  ○ Habitaclia: https://www.habitaclia.com/
+  - Fotocasa: https://www.fotocasa.es/es/
+  - Milanuncios: https://www.milanuncios.com/inmobiliaria/
+  - Habitaclia: https://www.habitaclia.com/
 - Airbnb dataset de información de inmuebles vacacionales en España.
 
 2. Componentes:
@@ -30,10 +30,10 @@ mostrar.
 - Cloud Storage: Almacenamiento de PDF listos para enviar al usuario.
 - Google Cloud SendGrid: Envío del mail al usuario.
 - Cloud Functions:
-  ○ Request a la API de Idealista.com y formatear los datos según requisitos del modelo de datos.
-  ○ Crawling y Scraping de las webs inmobiliarias (fotocasa, milanuncios y Habitaclia).
-  ○ Petición a Mongodb para saber que datos y preferencias tiene el usuario y modificar las tablas creadas por Google BigQuery que son mandadas al almacenamiento de Google Cloud SQL.
-  ○ Recibe datos de Google Cloud SQL, los sube al Cloud Storage y cuando estén listos, baja el pdf y mediante Google Cloud SendGrid manda el mail con el resultado al usuario.
+  - Request a la API de Idealista.com y formatear los datos según requisitos del modelo de datos.
+  - Crawling y Scraping de las webs inmobiliarias (fotocasa, milanuncios y Habitaclia).
+  - Petición a Mongodb para saber que datos y preferencias tiene el usuario y modificar las tablas creadas por Google BigQuery que son mandadas al almacenamiento de Google Cloud SQL.
+  - Recibe datos de Google Cloud SQL, los sube al Cloud Storage y cuando estén listos, baja el pdf y mediante Google Cloud SendGrid manda el mail con el resultado al usuario.
 
 # DAaaS Operating Model Design and Rollout
 
@@ -49,13 +49,13 @@ Crear Scheduler una vez a la semana que lanza Cloud Functions para recoger datos
 
 3. Google Cloud Functions:
  - Crea cloud functions en python para realizar diversas tareas
-    i. Request a la API de idealista.com: Un Cloud Function puede realizar peticiones a la API de Idealista.com utilizando la librería nativa de Python, Request, para obtener información actualizada sobre inmuebles en función de las preferencias de los usuarios. Los datos
+    -  Request a la API de idealista.com: Un Cloud Function puede realizar peticiones a la API de Idealista.com utilizando la librería nativa de Python, Request, para obtener información actualizada sobre inmuebles en función de las preferencias de los usuarios. Los datos
     se envían a una instancia de BigQuery para su posterior análisis.
-    ii. Crawling y Scraping de Webs Inmobiliarias: Utilizamos 3 Cloud Functions que realizan el crawling y scraping de sitios web inmobiliarios como Fotocasa, Milanuncios y Habitaclia. Utilizando BeautifulSoup y scrapy. La información obtenida se envía a una
+    -  Crawling y Scraping de Webs Inmobiliarias: Utilizamos 3 Cloud Functions que realizan el crawling y scraping de sitios web inmobiliarios como Fotocasa, Milanuncios y Habitaclia. Utilizando BeautifulSoup y scrapy. La información obtenida se envía a una
     instancia de BigQuery.
-    iii. Petición a MongoDB de los formularios y formatear los datos que
+    -  Petición a MongoDB de los formularios y formatear los datos que
     queremos comunicar entre BigQuery y Google Cloud SQL.
-    iv. Generador de PDF con los datos que recibimos ya filtrados de Google Cloud SQL utilizar la librería Aspose de Python e integramos el servicio de Google SendGrid para generar el mail que enviamos al
+    - Generador de PDF con los datos que recibimos ya filtrados de Google Cloud SQL utilizar la librería Aspose de Python e integramos el servicio de Google SendGrid para generar el mail que enviamos al
     usuario.
 
 4. Google BigQuery para el análisis de datos:
